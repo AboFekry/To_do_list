@@ -1,24 +1,73 @@
-<div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #0d0d0d;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+        .task-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease-in-out;
+        }
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .btn-success {
+            background: linear-gradient(45deg, #1d976c, #93f9b9);
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            border: none;
+        }
+        .btn-danger {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="glass-card mb-4">
+            <h3 class="text-success">Add New Task</h3>
+            <form method="POST" action="/" class="d-flex gap-2">
+                {% csrf_token %}
+                <input type="text" class="form-control" placeholder="Enter task..." name="title">
+                <button type="submit" class="btn btn-success">Create</button>
+            </form>
+        </div>
 
-	<form method="POST" action="/">
-		{% csrf_token %}
-		{{form.title}}
-		<input  type="submit" name="Create Task">
-	</form>
-
-	<div >
-
-	{% for task in tasks %}
-		<div >
-			<a  href="{% url 'update_task' task.id %}">Update</a>
-			<a  href="{% url 'delete' task.id %}">Delete</a>
-
-			{% if task.complete == True %}
-			<strike>{{task}}</strike>
-			{% else %}
-			<span>{{task}}</span>
-			{% endif %}
-		</div>
-	{% endfor %}
-	</div>
-</div>
+        <div class="glass-card">
+            <h3 class="text-info">Your Tasks</h3>
+            {% if tasks %}
+                {% for task in tasks %}
+                    <div class="task-item d-flex justify-content-between align-items-center">
+                        <span class="{% if task.complete %}text-decoration-line-through text-muted{% endif %}">{{ task }}</span>
+                        <div>
+                            <a href="{% url 'update_task' task.id %}" class="btn btn-primary btn-sm">Update</a>
+                            <a href="{% url 'delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text-muted">No tasks available.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

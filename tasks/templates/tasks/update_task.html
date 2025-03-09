@@ -1,7 +1,63 @@
-<h3>Update Task</h3>
-<form method="POST" action="">
-    {% csrf_token %}
-   {{form}}
-<input type ="submit" name="Update Task">
-
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #0d0d0d;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease-in-out;
+        }
+        .glass-card:hover {
+            box-shadow: 0 8px 40px rgba(255, 255, 255, 0.2);
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            border-color: #1e90ff;
+        }
+        .btn-update {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            border: none;
+            font-size: 1.2rem;
+            padding: 12px;
+            transition: 0.3s;
+        }
+        .btn-update:hover {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="glass-card text-center w-50">
+            <h3 class="text-primary mb-3">Update Task</h3>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-update w-100">Update Task</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
